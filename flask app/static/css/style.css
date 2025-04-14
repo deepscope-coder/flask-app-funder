@@ -1,0 +1,78 @@
+.mt-150 {
+  margin-top: 150px;
+}
+.mt-50 {
+  margin-top: 50px;
+}
+.ml-100 {
+  margin-left: 100px;
+}
+.mt-110 {
+  margin-top: 110px;
+}
+.transparent-bg {
+  background-image: url("https://png.pngtree.com/background/20250108/original/pngtree-smooth-and-tempting-a-delectable-background-of-melted-dark-chocolate-picture-image_13504272.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  min-height: 100vh; /* Full viewport height */
+}
+
+.content {
+  position: relative;
+  z-index: 2; /* Places content above the transparent overlay */
+}
+.text-vanilla {
+  color: #f5f5dc !important; /* Classic chocolate brown */
+}
+
+.navbar-transparent {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+.navbar-brand img {
+  transition: transform 0.3s ease;
+}
+.navbar-brand:hover img {
+  transform: scale(1.1);
+}
+.navbar-transparent .navbar-brand {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.logout-btn {
+  margin-left: auto;
+}
+.logout-btn .btn {
+  background-color: #f5f5dc !important;
+  color: #5c3317 !important;
+  border-color: #5c3317 !important;
+}
+.logout-btn .btn:hover {
+  background-color: #5c3317 !important;
+  color: #f5f5dc !important;
+}
+.content-container {
+  padding-top: 80px; /* Space below fixed navbar */
+}
+.chocolate-card {
+  transition: transform 0.3s ease;
+  margin-bottom: 10px;
+  border: 1px solid #5c3317;
+}
+.chocolate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(92, 51, 23, 0.1);
+}
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  background-color: #f5f5dc;
+}
+
+.resized-image {
+  width: 100px;
+  height: auto;
+}

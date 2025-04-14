@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DeepScope - AI-Powered Industrial Vision Systems</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deepscope-blue: #0056b3;
+            --deepscope-dark: #161e33;
+            --deepscope-light: #f0f3fa;
+            --accent-red: #dc244c;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--deepscope-dark);
+            background: url('/static/images/bg_image/braground_deep.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+        
+        h1, h2, h3, h4, .navbar-brand {
+            font-family: 'Roboto Slab', serif;
+            font-weight: 500;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, rgba(0, 86, 179, 0.8) 0%, rgba(22, 30, 51, 0.9) 100%);
+            color: white;
+            padding: 120px 0 80px;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .navbar {
+            padding: 20px 0;
+            transition: all 0.3s;
+            background-color: rgba(22, 30, 51, 0.9);
+        }
+        
+        .navbar.scrolled {
+            background-color: rgba(22, 30, 51, 0.95) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 10px 0;
+        }
+        
+        .btn-deepscope {
+            background-color: var(--accent-red);
+            color: white;
+            border: none;
+        }
+        
+        .btn-deepscope:hover {
+            background-color: #b51d3d;
+            color: white;
+        }
+        
+        .solution-card {
+            transition: transform 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+        }
+        
+        .solution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .tech-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .customer-logo {
+            height: 40px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+        
+        .customer-logo:hover {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+        
+        /* Stats counter */
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(22, 30, 51, 0.8);
+            border-radius: 8px;
+            margin: 10px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-red);
+        }
+        
+        /* Content containers */
+        .content-container {
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: rgba(22, 30, 51, 0.95) !important;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* Form styling */
+        .contact-form {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+    Navigation
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{{ url_for('static', filename='images/logo/logo_deep.jpg') }}" alt="DeepScope Logo" height="40" class="me-2">
+                DeepScope
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#solutions">Solutions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#technology">Technology</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#customers">Customers</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/founder">Founder</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+                <div class="ms-lg-3 mt-3 mt-lg-0">
+                    {% if 'user_id' in session %}
+                        <a href="/home" class="btn btn-light me-2">Dashboard</a>
+                        <a href="/logout" class="btn btn-outline-light">Logout</a>
+                    {% else %}
+                        <a href="/" class="btn btn-light me-2">Login</a>
+                        <a href="/register" class="btn btn-outline-light">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Seeing Deeper. Acting Smarter.</h1>
+                    <p class="lead mb-4">AI-powered vision systems for industrial safety, inspection, and inventory intelligence.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#contact" class="btn btn-deepscope btn-lg">Request Demo</a>
+                        <a href="/founder" class="btn btn-outline-light btn-lg">Meet Our Founder</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block">
+                    <img src="{{ url_for('static', filename='images/ai_vision/ai_vision systems.png') }}" alt="AI Vision System" class="img-fluid floating-animation">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solutions" class="py-5">
+        <div class="container py-5">
+            <div class="content-container text-center">
+                <h2 class="display-5 fw-bold mb-3">Our AI Solutions</h2>
+                <p class="lead text-muted">Transforming industrial operations with computer vision</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card solution-card">
+                        <div class="card-body p-4 text-center">
+                            <span class="badge bg-primary mb-3">Featured</span>
+                            <img src="{{ url_for('static', filename='images/icons/ppe4.jpg') }}" alt="PPE Detection" class="img-fluid rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+                            <h4 class="card-title">PPE Compliance</h4>
+                            <p class="card-text">Real-time detection of safety gear including helmets, gloves, and safety glasses to ensure worker protection.</p>
+                            <a href="#" class="btn btn-sm btn-deepscope mt-2">Learn More <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card solution-card">
+                        <div class="card-body p-4 text-center">
+                            <img src="{{ url_for('static', filename='images/icons/smart_invontory.jpg') }}" alt="Inventory" class="img-fluid rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+                            <h4 class="card-title">Smart Inventory</h4>
+                            <p class="card-text">Automated object detection and counting with our PostgreSQL-powered inventory management system.</p>
+                            <a href="#" class="btn btn-sm btn-deepscope mt-2">Learn More <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="card solution-card">
+                        <div class="card-body p-4 text-center">
+                            <img src="{{ url_for('static', filename='images/icons/ppe3.jpg') }}" class="img-fluid rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+                            <h4 class="card-title">Product Detection</h4>
+                            <p class="card-text">Real-time identification and counting of products for inventory management and operational efficiency.</p>
+                            <a href="#" class="btn btn-sm btn-deepscope mt-2">Learn More <i class="bi bi-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section id="technology" class="py-5">
+        <div class="container py-5">
+            <div class="content-container text-center">
+                <h2 class="display-5 fw-bold mb-3">Our Technology Stack</h2>
+                <p class="lead text-muted">Cutting-edge tools powering our vision solutions</p>
+            </div>
+            
+            <div class="content-container">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-6 col-md-4 col-lg-2 text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Python - Our primary development language">
+                        <img src="{{ url_for('static', filename='images/tech/python_im.jpg') }}" alt="Python" class="img-fluid mb-3 tech-stack-icon">
+                        <h6>Python</h6>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="PyTorch - For deep learning models">
+                        <img src="{{ url_for('static', filename='images/tech/pytorch_i.png') }}" alt="PyTorch" class="img-fluid mb-3 tech-stack-icon">
+                        <h6>PyTorch</h6>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="OpenCV - For computer vision tasks">
+                        <img src="{{ url_for('static', filename='images/tech/open_cv.jpg') }}" alt="OpenCV" class="img-fluid mb-3 tech-stack-icon">
+                        <h6>OpenCV</h6>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="PostgreSQL - Our primary database">
+                        <img src="{{ url_for('static', filename='images/tech/postgresql_i.png') }}" alt="PostgreSQL" class="img-fluid mb-3 tech-stack-icon">
+                        <h6>PostgreSQL</h6>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="FastAPI - For our backend services">
+                        <img src="{{ url_for('static', filename='images/tech/fast_api.png') }}" alt="FastAPI" class="img-fluid mb-3 tech-stack-icon">
+                        <h6>FastAPI</h6>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 text-center" data-bs-toggle="tooltip" data-bs-placement="top" title="Docker - For containerization">
+                        <img src="{{ url_for('static', filename='images/tech/docker_i.jpg') }}" alt="Docker" class="img-fluid mb-3 tech-stack-icon">
+                        <h6>Docker</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="row text-center">
+                <div class="col-6 col-md-3 stat-item">
+                    <div class="stat-number" data-count="150">0</div>
+                    <p class="mb-0">Happy Clients</p>
+                </div>
+                <div class="col-6 col-md-3 stat-item">
+                    <div class="stat-number" data-count="98">0</div>
+                    <p class="mb-0">% Accuracy</p>
+                </div>
+                <div class="col-6 col-md-3 stat-item">
+                    <div class="stat-number" data-count="24">0</div>
+                    <p class="mb-0">/7 Support</p>
+                </div>
+                <div class="col-6 col-md-3 stat-item">
+                    <div class="stat-number" data-count="500">0</div>
+                    <p class="mb-0">Cameras Deployed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Customer Logos -->
+    <section id="customers" class="py-5">
+        <div class="container py-5">
+            <div class="content-container text-center">
+                <h2 class="display-5 fw-bold mb-3">Trusted By Industry Leaders</h2>
+                <p class="lead text-muted">We help manufacturers and industrial organizations worldwide</p>
+            </div>
+            
+            <div class="content-container">
+                <div class="row g-4 align-items-center justify-content-center">
+                    <div class="col-6 col-md-4 col-lg-2 text-center">
+                        <img src="{{ url_for('static', filename='images/customers/bosch.png') }}" alt="Bosch" class="img-fluid customer-logo">
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 text-center">
+                        <img src="{{ url_for('static', filename='images/customers/siemens.png') }}" alt="Siemens" class="img-fluid customer-logo">
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 text-center">
+                        <img src="{{ url_for('static', filename='images/customers/ge.png') }}" alt="GE" class="img-fluid customer-logo">
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 text-center">
+                        <img src="{{ url_for('static', filename='images/customers/honeywell.png') }}" alt="Honeywell" class="img-fluid customer-logo">
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 text-center">
+                        <img src="{{ url_for('static', filename='images/customers/schneider.png') }}" alt="Schneider" class="img-fluid customer-logo">
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-2 text-center">
+                        <img src="{{ url_for('static', filename='images/customers/abb.png') }}" alt="ABB" class="img-fluid customer-logo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container py-5">
+            <div class="content-container">
+                <div class="text-center mb-5">
+                    <h2 class="display-5 fw-bold mb-3">About DeepScope</h2>
+                    <p class="lead">Pioneering AI vision for industrial applications</p>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <h3 class="mb-4">Our Mission</h3>
+                        <p class="mb-4">At DeepScope, we're revolutionizing industrial operations through advanced computer vision and AI technologies. Our mission is to enhance workplace safety, optimize inventory management, and improve operational efficiency.</p>
+                        <p>Founded in 2025 by <a href="founder.html">Ariful Mallick</a>, a computer vision expert with experience at DataCore Systems and Webel IT, we combine deep technical expertise with real-world operational knowledge.</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <h3 class="mb-4">Why Choose Us</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i> Industry-specific AI models with >95% accuracy</li>
+                            <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i> Seamless integration with existing systems</li>
+                            <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i> Real-time processing with low latency</li>
+                            <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i> Scalable solutions from single cameras to plant-wide deployments</li>
+                            <li class="mb-3"><i class="bi bi-check-circle-fill text-primary me-2"></i> Continuous learning and model improvement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center mb-5">
+                    <h2 class="display-5 fw-bold mb-3">Ready to Transform Your Operations?</h2>
+                    <p class="lead">Contact us for a demo or to discuss your specific needs</p>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-6 contact-form">
+                    <form id="contactForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="company" class="form-label">Company</label>
+                                <input type="text" class="form-control" id="company">
+                            </div>
+                            <div class="col-12">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="4" required></textarea>
+                            </div>
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn btn-deepscope btn-lg px-4">Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Footer -->
+   <footer class="py-5" style="color: white;">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <img src="{{ url_for('static', filename='images/logo/logo_deep.jpg') }}" alt="DeepScope Logo" height="40" class="mb-3">
+                <p style="color: white;">AI-powered vision systems for industrial safety, inspection, and inventory intelligence.</p>
+                <div class="d-flex gap-3">
+                  <a href="#" class="text-white" target="_blank"><i class="bi bi-twitter fs-5"></i></a>
+                  <a href="https://www.linkedin.com/in/arif-mallick-03205b232?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="text-white" target="_blank"><i class="bi bi-linkedin fs-5"></i></a>
+                  <a href="https://www.facebook.com/share/1HbGHhMnLR/" class="text-white" target="_blank"><i class="bi bi-facebook fs-5"></i></a>
+                  <a href="#" class="text-white" target="_blank"><i class="bi bi-youtube fs-5"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <h5 class="mb-4" style="color: white;">Solutions</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#solutions" class="text-white text-decoration-none">PPE Detection</a></li>
+                    <li class="mb-2"><a href="#solutions" class="text-white text-decoration-none">Smart Inventory</a></li>
+                    <li class="mb-2"><a href="#solutions" class="text-white text-decoration-none">Health Monitoring</a></li>
+                    <li class="mb-2"><a href="#solutions" class="text-white text-decoration-none">Anomaly Detection</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 col-md-4">
+                <h5 class="mb-4" style="color: white;">Company</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#about" class="text-white text-decoration-none">About Us</a></li>
+                    <li class="mb-2"><a href="founder.html" class="text-white text-decoration-none">Founder</a></li>
+                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Careers</a></li>
+                    <li class="mb-2"><a href="#" class="text-white text-decoration-none">Blog</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <h5 class="text-white text-decoration-none mb-4">Contact Info</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-3" style="color: white;"><i class="text-white text-decoration-none bi bi-geo-alt-fill me-2"></i> Kolkata, India</li>
+                    <li class="mb-3" style="color: white;"><i class="text-white text-decoration-none bi bi-telephone-fill me-2"></i> +91 8597009211</li>
+                    <li class="mb-3" style="color: white;"><i class="text-white text-decoration-none bi bi-envelope-fill me-2"></i> deepscope2@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="row">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-0" style="color: white;">&copy; 2025 DeepScope. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <a href="#" class="text-white text-decoration-none me-3">Privacy Policy</a>
+                <a href="#" class="text-white text-decoration-none">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // Stats counter animation
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const speed = 200;
+    
+    function animateStats() {
+        statNumbers.forEach(stat => {
+            const target = parseInt(stat.getAttribute('data-count'));
+            const count = parseInt(stat.innerText.replace(/,/g, ''));
+            const increment = Math.ceil(target / speed);
+            
+            if (count < target) {
+                stat.innerText = (count + increment).toLocaleString();
+                setTimeout(animateStats, 1);
+            } else {
+                stat.innerText = target.toLocaleString();
+                if (stat.getAttribute('data-count') === "98") {
+                    stat.innerText += "%";
+                }
+            }
+        });
+    }
+
+    // Start animation when stats section is in view
+    const statsSection = document.querySelector('.stat-item');
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            animateStats();
+            observer.unobserve(statsSection);
+        }
+    });
+
+    observer.observe(statsSection);
+
+    // Initialize tooltips
+    document.addEventListener('DOMContentLoaded', function() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+
+    // Form validation
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        const email = document.getElementById('email').value;
+        if (!email.includes('@')) {
+            e.preventDefault();
+            alert('Please enter a valid email address');
+            return false;
+        }
+        // Add more validation as needed
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DeepScope - Founder Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto+Slab:wght@500&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0056b3;
+            --dark: #161e33;
+            --light: #f0f3fa;
+            --accent: #dc244c;
+            --text: #333;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text);
+            background-color: white;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, .navbar-brand {
+            font-family: 'Roboto Slab', serif;
+            font-weight: 500;
+        }
+        
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+        
+        /* Subtle Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Gentle Pulse */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        /* Smooth Fade In */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Continuous Rotation */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Wave Animation */
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+        }
+        
+        /* Founder Profile Styles */
+        .founder-hero {
+            background-color: var(--light);
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .founder-section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin: -50px auto 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .founder-img {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid var(--primary);
+            margin-bottom: 20px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        .timeline-item:nth-child(1) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.6s; }
+        
+        .timeline-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -30px;
+            top: 30px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--primary);
+        }
+        
+        .skill-badge {
+            background: white;
+            color: var(--primary);
+            margin: 5px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 0.9rem;
+            border: 1px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .skill-badge:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .project-card {
+            background: white;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        .project-card:nth-child(1) { animation-delay: 0.3s; }
+        .project-card:nth-child(2) { animation-delay: 0.5s; }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Animated Underline */
+        .underline-animation {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .underline-animation::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.5s ease;
+        }
+        
+        .underline-animation:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        
+        /* Floating Circles Background */
+        .floating-circles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .floating-circles li {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(0, 86, 179, 0.1);
+            border-radius: 50%;
+            animation: float 15s linear infinite;
+            bottom: -150px;
+        }
+        
+        .floating-circles li:nth-child(1) {
+            left: 25%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 0s;
+            animation-duration: 20s;
+        }
+        
+        .floating-circles li:nth-child(2) {
+            left: 10%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 2s;
+            animation-duration: 12s;
+        }
+        
+        .floating-circles li:nth-child(3) {
+            left: 70%;
+            width: 20px;
+            height: 20px;
+            animation-delay: 4s;
+            animation-duration: 18s;
+        }
+        
+        /* Animated Wave Hand */
+        .wave-hand {
+            display: inline-block;
+            animation: wave 2s infinite;
+            transform-origin: 70% 70%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Circles Background -->
+    <ul class="floating-circles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">
+                <img src="static/images/logo/logo_deep.jpg" alt="DeepScope Logo" height="40" class="me-2">
+                <span class="underline-animation">DeepScope</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link underline-animation" href="home.html#solutions">Solutions</a></li>
+                    <li class="nav-item"><a class="nav-link underline-animation" href="home.html#technology">Technology</a></li>
+                    <li class="nav-item"><a class="nav-link underline-animation" href="home.html#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link active underline-animation" href="founder.html">Founder</a></li>
+                    <li class="nav-item"><a class="nav-link underline-animation" href="home.html#contact">Contact</a></li>
+                </ul>
+                <div class="ms-lg-3 mt-3 mt-lg-0">
+                    <a href="/" class="btn btn-outline-primary me-2">Login</a>
+                    <a href="/register" class="btn btn-primary">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Founder Hero Section -->
+    <section class="founder-hero">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-3">Meet Our Founder <span class="wave-hand">👋</span></h1>
+            <p class="lead">The visionary architect behind DeepScope's AI revolution</p>
+            <div class="mt-4">
+                <div class="d-inline-block px-4 py-2 rounded-pill bg-white shadow-sm">
+                    <span class="text-primary">AI Architect</span> • 
+                    <span class="text-primary">Tech Innovator</span> • 
+                    <span class="text-primary">Problem Solver</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder Profile Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="founder-section">
+                <div class="row">
+                    <div class="col-lg-4 text-center">
+                        <img src="static/images/founder/founder.jpg" alt="Ariful Mallick" class="founder-img">
+                        <h2>Ariful Mallick</h2>
+                        <p class="text-muted">Founder & Chief AI Architect</p>
+                        <div class="d-flex justify-content-center gap-3 mt-3">
+                            <a href="#" class="btn btn-outline-primary btn-circle pulse">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-dark btn-circle pulse">
+                                <i class="bi bi-github"></i>
+                            </a>
+                            <a href="#" class="btn btn-outline-danger btn-circle pulse">
+                                <i class="bi bi-envelope"></i>
+                            </a>
+                        </div>
+                        <hr class="my-4">
+                        <div class="text-start">
+                            <h5>Education</h5>
+                            <p><strong>The Neotia University</strong><br>
+                            Bachelor of Technology - Computer Science Engineering<br>
+                            Specialization: AI & ML<br>
+                            CGPA: 8.95<br>
+                            Graduation: 2025</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="card mb-4 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h3 class="mb-3">Professional Profile</h3>
+                                <p>AI/ML Engineer specializing in Computer Vision, Large Language Models, and AI Automation. Passionate about creating intelligent systems that bridge cutting-edge research with real-world applications. Expertise spans from low-level algorithm optimization to full-stack AI system deployment.</p>
+                            </div>
+                        </div>
+                        
+                        <h3 class="mb-4">Professional Experience</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <h5>AI/ML Engineer Intern</h5>
+                                <p class="text-muted">DataCore Systems</p>
+                                <ul>
+                                    <li>Developed and optimized CV models for object detection, classification, and segmentation using YOLO, FCNNs, and transformers</li>
+                                    <li>Pioneered vision-language models (VLMs) integration with LLMs achieving 97% accuracy</li>
+                                    <li>Designed AI agents for automation and intelligent decision-making</li>
+                                    <li>Built scalable data pipelines processing 1TB+ daily</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h5>AI/ML Engineer Intern</h5>
+                                <p class="text-muted">Webel IT</p>
+                                <ul>
+                                    <li>Optimized NLP system accuracy by 15% through transformer architecture modifications</li>
+                                    <li>Automated complex workflows reducing processing time by 30%</li>
+                                    <li>Implemented CI/CD pipelines for ML model deployment</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <h5>Software Engineer Intern</h5>
+                                <p class="text-muted">AILABS</p>
+                                <ul>
+                                    <li>Developed diagnostic AI models with 94% clinical accuracy</li>
+                                    <li>Optimized data pipelines for real-time medical imaging analysis</li>
+                                    <li>Implemented explainable AI techniques for healthcare compliance</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-5">
+                    <div class="col-md-6">
+                        <h3 class="mb-4">Key Projects</h3>
+                        <div class="card mb-3 project-card">
+                            <div class="card-body">
+                                <h5>Document Intelligence System</h5>
+                                <ul>
+                                    <li>Multimodal architecture combining YOLO, OCR and LLMs</li>
+                                    <li>97% classification accuracy for legal/financial documents</li>
+                                    <li>Reduced processing time from 5 minutes to 8 seconds</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card project-card">
+                            <div class="card-body">
+                                <h5>Urban Change Detection</h5>
+                                <ul>
+                                    <li>Satellite imagery analysis with OpenCV and TensorFlow</li>
+                                    <li>Real-time monitoring of infrastructure development</li>
+                                    <li>Integrated with GIS for spatial intelligence</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h3 class="mb-4">Technical Skills</h3>
+                        <div class="mb-4">
+                            <h5>Core Technologies</h5>
+                            <div>
+                                <span class="skill-badge">Computer Vision</span>
+                                <span class="skill-badge">YOLOv8/v9</span>
+                                <span class="skill-badge">Transformers</span>
+                                <span class="skill-badge">LLMs</span>
+                                <span class="skill-badge">PyTorch</span>
+                                <span class="skill-badge">TensorFlow</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5>Languages & Frameworks</h5>
+                            <div>
+                                <span class="skill-badge">Python</span>
+                                <span class="skill-badge">C++</span>
+                                <span class="skill-badge">FastAPI</span>
+                                <span class="skill-badge">React</span>
+                                <span class="skill-badge">Node.js</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5>Infrastructure</h5>
+                            <div>
+                                <span class="skill-badge">Docker</span>
+                                <span class="skill-badge">Kubernetes</span>
+                                <span class="skill-badge">AWS</span>
+                                <span class="skill-badge">CI/CD</span>
+                            </div>
+                        </div>
+                        
+                        <h3 class="mb-4">Achievements</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">🏆 Ranked 1045/24941 in Amazon ML Challenge 2024</li>
+                            <li class="mb-2">🏅 Google Kickstart 2023 - Top 5% participant</li>
+                            <li class="mb-2">📈 Optimized NLP models achieving 15% accuracy boost</li>
+                            <li class="mb-2">⚡ Automated workflows saving 30% processing time</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-light py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <img src="static/images/logo/logo_deep.jpg" alt="DeepScope Logo" height="40" class="mb-3">
+                    <p>AI-powered vision systems for industrial applications</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-dark"><i class="bi bi-twitter fs-5"></i></a>
+                        <a href="https://www.linkedin.com/in/arif-mallick-03205b232?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="text-dark"><i class="bi bi-linkedin fs-5"></i></a>
+                        <a href="https://www.facebook.com/share/1HbGHhMnLR/" class="text-dark"><i class="bi bi-facebook fs-5"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="mb-4">Solutions</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="home.html#solutions" class="text-dark text-decoration-none">PPE Detection</a></li>
+                        <li class="mb-2"><a href="home.html#solutions" class="text-dark text-decoration-none">Smart Inventory</a></li>
+                        <li class="mb-2"><a href="home.html#solutions" class="text-dark text-decoration-none">Anomaly Detection</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="mb-4">Company</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="home.html#about" class="text-dark text-decoration-none">About</a></li>
+                        <li class="mb-2"><a href="founder.html" class="text-dark text-decoration-none">Founder</a></li>
+                        <li class="mb-2"><a href="#" class="text-dark text-decoration-none">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h5 class="mb-4">Contact</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><i class="bi bi-geo-alt-fill me-2"></i> Kolkata, India</li>
+                        <li class="mb-3"><i class="bi bi-telephone-fill me-2"></i> +91 8597009211</li>
+                        <li class="mb-3"><i class="bi bi-envelope-fill me-2"></i> deepscope2@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2023 DeepScope. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-dark text-decoration-none me-3">Privacy</a>
+                    <a href="#" class="text-dark text-decoration-none">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Floating circles animation
+        const circles = document.querySelectorAll('.floating-circles li');
+        circles.forEach((circle, index) => {
+            // Randomize initial positions
+            circle.style.left = Math.random() * 100 + '%';
+            circle.style.bottom = -Math.random() * 100 + 'px';
+            
+            // Randomize animation duration
+            const duration = 10 + Math.random() * 20;
+            circle.style.animationDuration = duration + 's';
+            
+            // Random delay
+            circle.style.animationDelay = Math.random() * 5 + 's';
+        });
+        
+        // Scroll animations
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.timeline-item, .project-card');
+            elements.forEach(el => {
+                const elementPosition = el.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // Initialize elements as invisible
+        document.querySelectorAll('.timeline-item, .project-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+        });
+        
+        // Run on load and scroll
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-sm');
+                navbar.style.backgroundColor = 'rgba(255,255,255,0.95)';
+                navbar.style.backdropFilter = 'blur(10px)';
+            } else {
+                navbar.classList.remove('shadow-sm');
+                navbar.style.backgroundColor = 'rgba(255,255,255,1)';
+                navbar.style.backdropFilter = 'none';
+            }
+        });
+        
+        // Wave hand animation on hover
+        const waveHand = document.querySelector('.wave-hand');
+        waveHand.addEventListener('mouseenter', () => {
+            waveHand.style.animation = 'wave 0.5s infinite';
+        });
+        
+        waveHand.addEventListener('mouseleave', () => {
+            waveHand.style.animation = 'wave 2s infinite';
+        });
+    </script>
+</body>
+</html>
