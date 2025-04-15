@@ -41,21 +41,32 @@
             background-color: var(--accent-red);
             color: white;
             border: none;
+            transition: all 0.3s ease;
         }
         
         .btn-deepscope:hover {
             background-color: #b51d3d;
             color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         
         .navbar {
             padding: 20px 0;
             background-color: rgba(22, 30, 51, 0.9);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            background-color: rgba(22, 30, 51, 0.95) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 10px 0;
         }
         
         .hero-text {
             color: white;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            padding: 40px;
         }
         
         .form-control:focus {
@@ -66,11 +77,37 @@
         a {
             color: var(--accent-red);
             text-decoration: none;
+            transition: all 0.2s ease;
         }
         
         a:hover {
             color: #b51d3d;
             text-decoration: underline;
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--accent-red);
+            margin-bottom: 1rem;
+        }
+        
+        .benefits-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .benefits-list li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .benefits-list li:before {
+            content: "✓";
+            color: var(--accent-red);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -78,7 +115,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
                 <img src="{{ url_for('static', filename='images/logo/logo_deep.jpg') }}" alt="DeepScope Logo" height="40" class="me-2">
                 DeepScope
             </a>
@@ -87,13 +124,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#solutions">Solutions</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#technology">Technology</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}#solutions">Solutions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}#technology">Technology</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}#contact">Contact</a></li>
                 </ul>
                 <div class="ms-lg-3 mt-3 mt-lg-0">
-                    <a href="/" class="btn btn-light me-2">Login</a>
-                    <a href="/register" class="btn btn-outline-light">Register</a>
+                    {% if 'user_id' in session %}
+                        <a href="{{ url_for('home') }}" class="btn btn-light me-2">Dashboard</a>
+                        <a href="{{ url_for('logout') }}" class="btn btn-outline-light">Logout</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="btn btn-light me-2">Login</a>
+                        <a href="{{ url_for('register') }}" class="btn btn-outline-light">Register</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -106,8 +149,21 @@
                 <div class="hero-text">
                     <h1 class="display-4 fw-bold mb-4">Join DeepScope Today</h1>
                     <p class="lead mb-4">Unlock the power of AI-powered vision systems for industrial safety, inspection, and inventory intelligence.</p>
+                    
+                    <div class="mb-5">
+                        <h3 class="mb-3">Why Register?</h3>
+                        <ul class="benefits-list">
+                            <li>Access to real-time industrial monitoring</li>
+                            <li>AI-powered safety compliance tracking</li>
+                            <li>Smart inventory management tools</li>
+                            <li>Customizable dashboard and reports</li>
+                            <li>Priority customer support</li>
+                        </ul>
+                    </div>
+                    
                     <div class="d-flex gap-3">
-                        <a href="#contact" class="btn btn-deepscope btn-lg">Learn More</a>
+                        <a href="{{ url_for('home') }}#solutions" class="btn btn-deepscope btn-lg">Learn More</a>
+                        <a href="{{ url_for('home') }}#contact" class="btn btn-outline-light btn-lg">Request Demo</a>
                     </div>
                 </div>
             </div>
@@ -125,31 +181,94 @@
                     </div>
                     {% endif %}
                     
-                    <form method="post" action="/register_validation">
+                    <form method="post" action="{{ url_for('register_validation') }}">
                         <div class="mb-3">
                             <label for="name" class="form-label">Full Name</label>
                             <input type="text" class="form-control" id="name" name="uname" placeholder="Enter your full name" required>
+                            <div class="form-text">Please enter your full legal name</div>
                         </div>
                         
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
                             <input type="email" class="form-control" id="email" name="uemail" placeholder="Enter your email" required>
+                            <div class="form-text">We'll never share your email with anyone</div>
                         </div>
                         
                         <div class="mb-4">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="upassword" placeholder="Create a password (min 5 characters)" required>
+                            <input type="password" class="form-control" id="password" name="upassword" placeholder="Create a password (min 5 characters)" required minlength="5">
+                            <div class="form-text">Minimum 5 characters</div>
+                        </div>
+                        
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="terms" required>
+                            <label class="form-check-label" for="terms">I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a> and <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a></label>
                         </div>
                         
                         <div class="d-grid gap-2 mb-3">
-                            <button type="submit" class="btn btn-deepscope btn-lg">Register</button>
+                            <button type="submit" class="btn btn-deepscope btn-lg py-3">Create Account</button>
                         </div>
                         
                         <div class="text-center">
-                            <button type="reset" class="btn btn-outline-secondary btn-sm me-2">Clear Form</button>
-                            <span class="text-muted">Already have an account? <a href="/">Sign in</a></span>
+                            <span class="text-muted">Already have an account? <a href="{{ url_for('login') }}">Sign in here</a></span>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Terms of Service</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4>DeepScope Terms of Service</h4>
+                    <p>Last Updated: June 2023</p>
+                    
+                    <h5 class="mt-4">1. Acceptance of Terms</h5>
+                    <p>By accessing or using the DeepScope platform, you agree to be bound by these Terms of Service...</p>
+                    
+                    <h5 class="mt-4">2. Account Registration</h5>
+                    <p>You must provide accurate and complete information when creating an account...</p>
+                    
+                    <h5 class="mt-4">3. Privacy Policy</h5>
+                    <p>Your privacy is important to us. Please review our Privacy Policy to understand how we collect and use your information...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Modal -->
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4>DeepScope Privacy Policy</h4>
+                    <p>Last Updated: June 2023</p>
+                    
+                    <h5 class="mt-4">1. Information We Collect</h5>
+                    <p>We collect information you provide when registering for an account, including your name, email address...</p>
+                    
+                    <h5 class="mt-4">2. How We Use Your Information</h5>
+                    <p>We use the information we collect to provide and improve our services, communicate with you...</p>
+                    
+                    <h5 class="mt-4">3. Data Security</h5>
+                    <p>We implement appropriate technical and organizational measures to protect your personal information...</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -164,6 +283,35 @@
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Password strength indicator
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthIndicator = document.getElementById('password-strength');
+            
+            if (password.length === 0) {
+                strengthIndicator.textContent = '';
+            } else if (password.length < 5) {
+                strengthIndicator.textContent = 'Weak';
+                strengthIndicator.className = 'text-danger';
+            } else if (password.length < 8) {
+                strengthIndicator.textContent = 'Medium';
+                strengthIndicator.className = 'text-warning';
+            } else {
+                strengthIndicator.textContent = 'Strong';
+                strengthIndicator.className = 'text-success';
+            }
+        });
+
+        // Form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const termsCheckbox = document.getElementById('terms');
+            if (!termsCheckbox.checked) {
+                e.preventDefault();
+                alert('Please agree to the Terms of Service and Privacy Policy');
+                termsCheckbox.focus();
             }
         });
     </script>

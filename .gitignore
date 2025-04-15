@@ -1,6 +1,7 @@
-__pycache__/
+echo "__pycache__/
+venv/
 *.pyc
 *.pyo
 *.pyd
 .env
-venv/
+.DS_Store" > .gitignore

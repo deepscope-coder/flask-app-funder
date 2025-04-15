@@ -274,8 +274,8 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="home.html">
-                <img src="static/images/logo/logo_deep.jpg" alt="DeepScope Logo" height="40" class="me-2">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='images/logo/logo_deep.jpg') }}" alt="DeepScope Logo" height="40" class="me-2">
                 <span class="underline-animation">DeepScope</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -283,15 +283,21 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link underline-animation" href="home.html#solutions">Solutions</a></li>
-                    <li class="nav-item"><a class="nav-link underline-animation" href="home.html#technology">Technology</a></li>
-                    <li class="nav-item"><a class="nav-link underline-animation" href="home.html#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link active underline-animation" href="founder.html">Founder</a></li>
-                    <li class="nav-item"><a class="nav-link underline-animation" href="home.html#contact">Contact</a></li>
+                    <!-- Updated Links -->
+                    <li class="nav-item"><a class="nav-link underline-animation" href="{{ url_for('home') }}#solutions">Solutions</a></li>
+                    <li class="nav-item"><a class="nav-link underline-animation" href="{{ url_for('home') }}#technology">Technology</a></li>
+                    <li class="nav-item"><a class="nav-link underline-animation" href="{{ url_for('home') }}#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link active underline-animation" href="{{ url_for('founder') }}">Founder</a></li>
+                    <li class="nav-item"><a class="nav-link underline-animation" href="{{ url_for('home') }}#contact">Contact</a></li>
                 </ul>
                 <div class="ms-lg-3 mt-3 mt-lg-0">
-                    <a href="/" class="btn btn-outline-primary me-2">Login</a>
-                    <a href="/register" class="btn btn-primary">Register</a>
+                    {% if 'user_id' in session %}
+                        <a href="{{ url_for('home') }}" class="btn btn-outline-primary me-2">Dashboard</a>
+                        <a href="{{ url_for('logout') }}" class="btn btn-primary">Logout</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="btn btn-outline-primary me-2">Login</a>
+                        <a href="{{ url_for('register') }}" class="btn btn-primary">Register</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

@@ -208,6 +208,31 @@ def register_validation():
             return render_template('register.html', error_message="Email already exists. Please use a different email.")
         return render_template('register.html', error_message="Registration failed. Please try again.")
 
+
+@app.route('/submit_contact', methods=['POST'])
+def submit_contact():
+    if request.method == 'POST':
+        try:
+            name = request.form.get('name')
+            email = request.form.get('email')
+            company = request.form.get('company')
+            message = request.form.get('message')
+            
+            # Insert into database
+            query = sql.SQL("""
+                INSERT INTO messages (name, email, company, message) 
+                VALUES (%s, %s, %s, %s)
+            """)
+            cursor.execute(query, (name, email, company, message))
+            conn.commit()
+            
+            return {'status': 'success', 'message': 'Thank you for your message!'}
+        except Exception as e:
+            conn.rollback()
+            print(f"Error saving message: {str(e)}")
+            return {'status': 'error', 'message': 'Failed to send message. Please try again.'}, 500
+        
+
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)

@@ -380,19 +380,19 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" required>
+                                <input type="text" class="form-control" id="name" name="name" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" required>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="col-12">
                                 <label for="company" class="form-label">Company</label>
-                                <input type="text" class="form-control" id="company">
+                                <input type="text" class="form-control" id="company" name="company">
                             </div>
                             <div class="col-12">
                                 <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" rows="4" required></textarea>
+                                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
                             </div>
                             <div class="col-12 text-center mt-4">
                                 <button type="submit" class="btn btn-deepscope btn-lg px-4">Send Message</button>
@@ -511,15 +511,43 @@
         });
     });
 
-    // Form validation
+    // Contact Form Submission
     document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Basic validation
         const email = document.getElementById('email').value;
         if (!email.includes('@')) {
-            e.preventDefault();
             alert('Please enter a valid email address');
             return false;
         }
-        // Add more validation as needed
+
+        // Get form data
+        const formData = new FormData(this);
+        
+        // Send data to server
+        fetch('/submit_contact', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Thank you for your message! We will contact you soon.');
+                document.getElementById('contactForm').reset();
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('There was a problem submitting your form. Please try again later.');
+        });
     });
 </script>
 </body>
