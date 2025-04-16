@@ -101,28 +101,18 @@ from flask import Flask, render_template, request, redirect, session
 import psycopg2  # Changed from mysql.connector to psycopg2
 import os
 from psycopg2 import sql
-import urllib.parse as up
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 app.secret_key = os.urandom(30)
 
 # PostgreSQL connection parameters - update these with your credentials
-# conn = psycopg2.connect(
-#     host='localhost',
-#     user='postgres',  # default PostgreSQL user is 'postgres'
-#     password='621424',  # your PostgreSQL password
-#     database='deepscope'
-# )
-# Enable parsing of postgres:// URIs
-up.uses_netloc.append("postgres")
-
-# Get the connection URL from environment variable
-db_url = os.environ.get("postgresql://postgresql_9vwr_user:xskinR2z3taAiBD8HRwxI6mxfNykof0i@dpg-cvvlo4muk2gs73defi40-a/postgresql_9vwr") or os.environ.get("postgresql://postgresql_9vwr_user:xskinR2z3taAiBD8HRwxI6mxfNykof0i@dpg-cvvlo4muk2gs73defi40-a.virginia-postgres.render.com/postgresql_9vwr")
-
-# Connect using the full connection string
-conn = psycopg2.connect(db_url)
+conn = psycopg2.connect(
+    host='localhost',
+    user='postgres',  # default PostgreSQL user is 'postgres'
+    password='621424',  # your PostgreSQL password
+    database='deepscope'
+)
 cursor = conn.cursor()
-
 
 @app.route('/')
 def login():
