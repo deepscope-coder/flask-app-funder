@@ -102,7 +102,7 @@ import psycopg2  # Changed from mysql.connector to psycopg2
 import os
 from psycopg2 import sql
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 app.secret_key = os.urandom(30)
 
 # PostgreSQL connection parameters - update these with your credentials
