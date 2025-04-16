@@ -117,10 +117,10 @@ app.secret_key = os.urandom(30)
 up.uses_netloc.append("postgres")
 
 # Get the connection URL from environment variable
-url = os.environ.get("DATABASE_URL")
+db_url = os.environ.get("postgresql://postgresql_9vwr_user:xskinR2z3taAiBD8HRwxI6mxfNykof0i@dpg-cvvlo4muk2gs73defi40-a/postgresql_9vwr") or os.environ.get("postgresql://postgresql_9vwr_user:xskinR2z3taAiBD8HRwxI6mxfNykof0i@dpg-cvvlo4muk2gs73defi40-a.virginia-postgres.render.com/postgresql_9vwr")
 
 # Connect using the full connection string
-conn = psycopg2.connect(url)
+conn = psycopg2.connect(db_url)
 cursor = conn.cursor()
 
 
