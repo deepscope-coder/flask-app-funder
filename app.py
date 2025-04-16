@@ -106,11 +106,18 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 app.secret_key = os.urandom(30)
 
 # PostgreSQL connection parameters - update these with your credentials
+# conn = psycopg2.connect(
+#     host='localhost',
+#     user='postgres',  # default PostgreSQL user is 'postgres'
+#     password='621424',  # your PostgreSQL password
+#     database='deepscope'
+# )
 conn = psycopg2.connect(
-    host='localhost',
-    user='postgres',  # default PostgreSQL user is 'postgres'
-    password='621424',  # your PostgreSQL password
-    database='deepscope'
+    host=os.getenv("dpg-cvvlo4muk2gs73defi40-a"),
+    user=os.getenv("5432"),
+    password=os.getenv("xskinR2z3taAiBD8HRwxI6mxfNykof0i"),
+    database=os.getenv("postgresql_9vwr"),
+    port=5432
 )
 cursor = conn.cursor()
 
